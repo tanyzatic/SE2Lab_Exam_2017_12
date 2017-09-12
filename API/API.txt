@@ -1,0 +1,165 @@
+swagger: '2.0'
+info:
+  title: forniture warehouse
+  description: A web services that manages the fornitures
+  version: "1.0.0"
+host: myserver.it
+schemes:
+  - https
+basePath: /
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /:
+    get:
+      summary: home page
+      description: it returns the home page of the service
+      responses:
+        200:
+          description: welcome page
+
+            
+  /showFornitures:
+    get:
+      summary: show fornitures stored 
+      description: it returns the complete list of forniture
+      responses:
+        200:
+          description: web page with the list of fornitures
+          
+          
+  /searchForniture:
+    post:
+      summary: search for fornitures
+      consumes:
+        - application/x-www-form-urlencoded
+      description: it returns the element that matched the ID specified, 404 otherwise
+      parameters:
+        - name: ID
+          in: formData
+          description: ID of the forniture
+          required: true
+          type: string
+      responses:
+        200:
+          description: the forniture found
+          schema: 
+              $ref: "#/definitions/item"
+        406:
+          description: ID of error
+          schema: 
+            properties:
+              error:
+                type: integer
+        404:
+          description: no forniture that matches the criteria
+          
+  /insertRawElements:
+    post:
+      summary: updates raw elements, specified by ID, by adding the quantity to existing elements. if the ID is not found it returns 404
+      consumes:
+        - application/x-www-form-urlencoded
+      description: it returns the disk remastered
+      parameters:
+        - name: ID
+          in: formData
+          description: ID of the disk
+          required: true
+          type: integer
+        - name: quantity
+          in: formData
+          description: quantity of the disk remastered
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ack insertion
+          schema: 
+              $ref: "#/definitions/rawElement"
+        406:
+          description: ID of error, parameters are not correct 
+          schema: 
+            properties:
+              error:
+                type: integer
+        400:
+          description: raw element not found
+            
+  /updateFornitures:
+    post:
+      summary: updates the forniture. If the ID specified exists it substitute price, quantity and elements to existing forniture. Otherwiese it adds a new ones.
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: fornitureID
+          in: formData
+          description: genre to search for
+          required: true
+          type: string
+        - name: forniturePrice
+          in: formData
+          description: genre to search for
+          required: true
+          type: string
+        - name: fornitureQuantity
+          in: formData
+          description: genre to search for
+          required: true
+          type: string
+        - name: fornitureElements
+          in: formData
+          description: genre to search for
+          required: true
+          type: string
+      responses:
+        200:
+          description: updated/ new element
+          schema: 
+              $ref: "#/definitions/item"
+        406:
+          description: ID of error, parameters are not correct 
+          schema: 
+            properties:
+              error:
+                type: integer
+        400:
+          description: general error
+          
+definitions:
+  item:
+    properties:
+      ID:
+        type: integer
+        description: ID of the forniture
+      price:
+        type: integer
+        description: price of the forniture
+      quantity:
+        type: integer
+        description: quantity of fornitures stored
+      elements:
+        type: array
+        items:
+           $ref: "#/definitions/elements"
+        description: genre of the disk
+
+  rawElement:
+    properties:
+      ID:
+        type: integer
+        description: ID of the rawElement
+      name:
+        type: string
+        description: price of the rawElement
+      quantity:
+        type: integer
+        description: quantity of rawElements
+
+  elements:
+    properties:
+      ID:
+        type: integer
+      quantity:
+        type: integer
