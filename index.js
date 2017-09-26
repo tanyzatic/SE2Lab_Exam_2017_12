@@ -172,6 +172,53 @@ app.post('/sellFornitures', function(request, response)
 
 });
 
+// Inserisco funzione "insertRawElement"
+app.use('/insertRawElements', function(request, response){
+    var headers = {};
+	headers["Access-Control-Allow-Origin"] = "*";
+	headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
+	headers["Access-Control-Allow-Credentials"] = false;
+	headers["Access-Control-Max-Age"] = '86400'; // 24 hours
+	headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept";
+	headers["Content-Type"] = "application/json";
+    
+    var id_element;
+    var elem_quantity;
+    
+    if(typeof request.body !== 'undefined' && request.body){
+        
+        if(typeof request.body.ID !== 'undefined' && request.body.ID){
+            id_element = request.body.ID;
+        }else{
+            id_element = 'none';
+        }
+        
+        if(typeof request.body.quantity !== 'undefined' && request.body.quantity){
+            elem_quantity = request.body.quantity;
+        }else{
+            elem_quantity = 'none';
+        }
+        
+    }
+    
+    if(id_element == 'none' || elem_quantity == 'none'){
+        response.writeHead(406, headers);
+        response.end("raw element not found");
+    }else{
+        var resInsertQuantity = fornitureWarehouse.inserRawElement(id_element, elem_quantity);
+        
+        if(resInsertQuantity == null){
+            response.writeHead(404, headers);
+            response.end(JSON.stringify(id_element));
+        }else{
+            response.writeHead(200, headers);
+            response.end(JSON.stringify(resInsertQuantity));
+        }
+        
+    }
+    
+});
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
