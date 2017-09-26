@@ -1,0 +1,23 @@
+{
+  "name": "se2lab_exam_2017_12",
+  "version": "1.0.0",
+  "description": "Esame Ingegneria del software II -26 settembre 2017",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.5",
+    "npm": "^5.4.2",
+    "util": "^0.10.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://https://github.com/tanyzatic/SE2Lab_Exam_2017_12.git"
+  },
+  "author": "Zatic Tatiana - 187267",
+ 
+  }
