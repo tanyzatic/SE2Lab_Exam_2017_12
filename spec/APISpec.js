@@ -47,6 +47,24 @@ describe("Test /showFornitures", function() {
     }); 
 });
 
+
+
+// Test for /searchFornitures
+describe("Test /searchFornitures", function() {
+    it("returns status code 200", function(done) {
+        request.get(
+            base_url + "showRawElements/", 
+            function(error, response, body) {
+                expect(response.statusCode).toBe(200);
+                done();
+            });
+    }); 
+});
+
+
+
+
+
 //Test for /sellFornitures
 describe("Test /sellFornitures", function() {	
 	//legal request
